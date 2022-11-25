@@ -1,0 +1,61 @@
+---
+##                       ._____.   .__
+##  _____    ____   _____|__\_ |__ |  |   ____             ____ _____    ______
+##  \__  \  /    \ /  ___/  || __ \|  | _/ __ \   ______  /    \\__  \  /  ___/
+##   / __ \|   |  \\___ \|  || \_\ \  |_\  ___/  /_____/ |   |  \/ __ \_\___ \
+##  (____  /___|  /____  >__||___  /____/\___  >         |___|  (____  /____  >
+##       \/     \/     \/        \/          \/               \/     \/     \/
+##     a n s i b l e - n a s      https://github.com/davestephens/ansible-nas
+
+# Add your all.yml config overrides to this file. See group_vars/all.yml for all possible settings.
+
+# Example options
+ansible_nas_user: hleth
+ansible_nas_hostname: ansible-nas
+ansible_nas_timezone: Europe/Oslo
+
+## Applications
+portainer_enabled: true
+glances_enabled: true
+homeassistant_enabled: true
+zwave_js_enabled: true
+
+## Home Assistant
+homeassistant_memory: 2g
+
+portainer_memory: 512m
+glances_memory: 1g
+zwave_js_memory: 1g
+
+zwave_js_serial_device: "/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_a40a61e08e74ec11862ca75019c2d21c-if00-port0"
+## Docker
+docker_home: /mnt/tank/docker
+docker_storage_driver: zfs
+
+## Samba
+samba_shares_root: /mnt/tank
+
+hleth_root: "{{ samba_shares_root  }}/hleth"
+
+samba_shares:
+  - name: hleth
+    comment: 'hleth'
+    group: hleth
+    write_list: hleth
+    guest_ok: no
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ hleth_root }}"
+
+  - name: hass
+    valid users: hleth, root
+    force user: root
+    force group: root
+    write_list: hleth, root
+    guest_ok: no
+    public: no
+    writeable: yes
+    browseable: yes
+    path: "{{ homeassistant_data_directory }}"
+
