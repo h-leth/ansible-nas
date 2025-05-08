@@ -4,22 +4,22 @@
     path: "{{ item }}"
     state: directory
   with_items:
-    - "{{ minecraft_server_data_directory }}"
+    - "{{ minecraft_java_server_data_directory }}"
 
-- name: Create bridged mc_bedrock network
+- name: Create bridged mc-java network
   docker_network:
-    name: mc_bedrock
+    name: mc-java
 
 - name: Minecraft Server Docker Container
   docker_container:
-    name: minecraft-server
-    image: itzg/minecraft-bedrock-server:latest
+    name: minecraft-java-server
+    image: itzg/minecraft-server:latest
     pull: true
     volumes:
-      - "{{ minecraft_server_data_directory }}:/data:rw"
-    network_mode: mc_bedrock
+      - "{{ minecraft_java_server_data_directory }}:/data:rw"
+    network_mode: mc-java 
     ports:
-      - "{{ minecraft_server_port }}:19132"
+      - "{{ minecraft_java_server_port }}:25565"
     interactive: true
     tty: true
     env:

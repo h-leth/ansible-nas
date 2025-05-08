@@ -1,12 +1,17 @@
 ---
 zwave_js_enabled: false
 
-zwave_js_container_name: "zwave_js_ui"
-zwave_js_docker_image: "zwavejs/zwave-js-ui:latest"
+# directories 
 zwave_js_directory: "{{ docker_home }}/zwave_js"
+
+# network
 zwave_js_ui_port: "8091"
 zwave_js_ws_port: "3000"
-zwave_js_serial_device: "/dev/ttyUSB0"
-zwave_js_secret: "mysupersecret"
-zwave_js_memory: "1g"
 
+# specs
+zwave_js_secret: "mysupersecret"
+zwave_js_memory: 1g
+
+# Do not use /dev/ttyUSBX serial devices, as those mappings can change over ti0me.
+# Instead, use the /dev/serial/by-id/X serial device for your Z-Wave stick.
+zwave_js_serial_device: "/dev/ttyUSBX"

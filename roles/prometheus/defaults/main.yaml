@@ -1,0 +1,15 @@
+---
+prometheus_enabled: false
+
+# directories 
+prometheus_directory: "{{ docker_home }}/prometheus"
+snmp_exporter_directory: "{{ docker_home }}/snmp_exporter"
+
+# network
+prometheus_port: "9090"
+snmp_port: "9116"
+snmp_port2: "116"
+
+# specs
+prometheus_memory: 512M 
+snmp_exporter_memory: 512M

@@ -1,0 +1,45 @@
+---
+- name: Start Loki
+  block:
+    - name: Create Loki Directories
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ loki_directory }}"
+        - "{{ loki_data_directory }}"
+
+    - name: Check if default config exists
+      stat:
+        path: "{{ loki_directory }}/data/local-config.yaml"
+      register: result
+
+    - name: Copy Loki default config
+      ansible.builtin.get_url:
+        url: "{{ loki_default_config_url }}"
+        dest: "{{ loki_directory }}/data/local-config.yaml"
+      when: not result.stat.exists
+
+    - name: Loki Docker Container
+      docker_container:
+        name: loki
+        image: grafana/loki:latest
+        pull: true
+        volumes:
+          - "{{ loki_directory }}/data:/etc/loki:rw"
+        ports: 
+          - "{{ loki_port }}:3100"
+        restart_policy: unless-stopped
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+        memory: "{{ loki_memory }}"
+  when: loki_enabled is true
+
+- name: Stop Loki
+  block:
+    - name: Stop Loki
+      docker_container:
+        name: loki
+        state: absent
+
+  when: loki_enabled is false

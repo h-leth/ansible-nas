@@ -137,6 +137,11 @@
         - glances
       when: (glances_enabled | default(False))
 
+    - role: grafana
+      tags:
+        - grafana
+      when: (grafana_enabled | default(False))
+
     - role: gotify
       tags:
         - gotify
@@ -201,6 +206,16 @@
         - lidarr
       when: (lidarr_enabled | default(False))
 
+    - role: loki
+      tags:
+        - loki
+      when: (loki_enabled | default(false))
+
+    - role: mariadb
+      tags:
+        - mariadb
+      when: (mariadb_enabled | default(False))
+
     - role: mealie
       tags:
         - mealie
@@ -210,6 +225,11 @@
       tags:
         - minecraft-server
       when: (minecraft_server_enabled | default(False))
+
+    - role: minecraft-java-server
+      tags:
+        - minecraft-java-server
+      when: (minecraft_java_server_enabled | default(False))
 
     - role: minidlna
       tags:
@@ -314,6 +334,16 @@
       tags:
         - portainer
       when: (portainer_enabled | default(False))
+
+    - role: prometheus
+      tags:
+        - prometheus
+      when: (prometheus_enabled | default(False))
+
+    - role: promtail
+      tags:
+        - promtail
+      when: (promtail_enabled | default(False))
 
     - role: prowlarr
       tags:
@@ -454,3 +484,8 @@
       tags:
         - znc
       when: (znc_enabled | default(False))
+
+    - role: zwave_js
+      tags:
+        - zwave_js
+      when: (zwave_js_enabled | default(false))

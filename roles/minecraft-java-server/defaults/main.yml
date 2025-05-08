@@ -1,0 +1,8 @@
+---
+minecraft_java_server_enabled: false
+
+# directories
+minecraft_java_server_data_directory: "{{ docker_home }}/minecraft-java"
+
+# network
+minecraft_java_server_port: "25565"

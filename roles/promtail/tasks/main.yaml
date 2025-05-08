@@ -1,0 +1,45 @@
+---
+- name: Start Promtail
+  block:
+    - name: Create Promtail Directories
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ promtail_directory }}"
+        - "{{ promtail_data_directory }}"
+        - "{{ promtail_log_directory }}"
+
+    - name: Check if default config exists
+      stat:
+        path: "{{ promtail_directory }}/data/config.yml"
+      register: result
+
+    - name: Copy Promtail default config
+      ansible.builtin.get_url:
+        url: "{{ promtail_default_config_url }}"
+        dest: "{{ promtail_directory }}/data/config.yml"
+      when: not result.stat.exists
+ 
+    - name: Promtail Docker Container
+      docker_container:
+        name: promtail
+        image: grafana/promtail:latest
+        pull: true
+        volumes:
+          - "{{ promtail_directory }}/data:/etc/promtail:rw"
+          - "{{ promtail_directory }}/log:/var/log:rw"
+        restart_policy: unless-stopped
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+        memory: "{{ promtail_memory }}"
+  when: promtail_enabled is true
+
+- name: Stop Promtail
+  block:
+    - name: Stop Promtail
+      docker_container:
+        name: promtail
+        state: absent
+
+  when: promtail_enabled is false

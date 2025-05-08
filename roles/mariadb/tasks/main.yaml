@@ -1,0 +1,34 @@
+---
+- name: Start MariaDB docker container
+  block:
+    - name: Create MariaDB directory
+      file:
+        path: "{{ mariadb_directory }}"
+        state: directory
+
+    - name: MariaDB Docker Container
+      docker_container:
+        name: mariadb
+        image: mariadb
+        pull: true
+        volumes:
+          - "{{ mariadb_directory }}/opt/mariadb:/var/lib/mysql"
+        ports:
+          - "{{ mariadb_default_port }}:3306"
+          - "{{ mariadb_secondary_port }}:3307"
+        restart_policy: unless-stopped
+        env:
+          MYSQL_ROOT_PASSWORD: "{{ mariadb_root_pw }}"
+          MYSQL_USER: homeassistant
+          MYSQL_PASSWORD: "{{ mariadb_pw }}"
+          MYSQL_DATABASE: homeassistant
+        memory: "{{ mariadb_memory }}"
+  when: mariadb_enabled is true
+
+- name: Stop MariaDB
+  block:
+    - name: Stop MariaDB
+      docker_container:
+        name: mariadb
+        state: absent
+  when: mariadb_enabled is false

@@ -1,0 +1,14 @@
+---
+mariadb_enabled: false
+
+# directories
+mariadb_directory: "{{ docker_home }}/mariadb"
+
+# network
+mariadb_default_port: "3306"
+mariadb_secondary_port: "3307"
+
+# specs
+mariadb_root_pw: "mysupersecretrootsecret"
+mariadb_pw: "mysupersecret"
+mariadb_memory: 1g 

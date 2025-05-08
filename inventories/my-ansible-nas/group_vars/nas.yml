@@ -11,23 +11,33 @@
 
 # Example options
 ansible_nas_user: hleth
-ansible_nas_hostname: ansible-nas
+ansible_nas_hostname: server01
 ansible_nas_timezone: Europe/Oslo
 
 ## Applications
-portainer_enabled: true
 glances_enabled: true
+grafana_enabled: true
 homeassistant_enabled: true
+loki_enabled: true
+mariadb_enabled: true
+netbootxyz_enabled: true
+portainer_enabled: true
+prometheus_enabled: true
+promtail_enabled: true
 zwave_js_enabled: true
+minecraft_server_enabled: true
+minecraft_java_server_enabled: true
+transmission_enabled: true
 
 ## Home Assistant
-homeassistant_memory: 2g
+homeassistant_memory: 4g
 
-portainer_memory: 512m
-glances_memory: 1g
-zwave_js_memory: 1g
+## Utorrent
+utorrent_download_directory: "{{ hleth_root }}/Download"
 
+## Z-Wave JS UI
 zwave_js_serial_device: "/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_a40a61e08e74ec11862ca75019c2d21c-if00-port0"
+
 ## Docker
 docker_home: /mnt/tank/docker
 docker_storage_driver: zfs
@@ -38,13 +48,16 @@ samba_shares_root: /mnt/tank
 hleth_root: "{{ samba_shares_root  }}/hleth"
 
 samba_shares:
-  - name: hleth
-    comment: 'hleth'
-    group: hleth
-    write_list: hleth
+  - name: filesrv
+    comment: 'filesrv'
+    valid_users: hleth, lleth
+    write_list: +filesrv
+    group: filesrv
+    create_mode: 660
+    directory_mode: 770
     guest_ok: no
     public: yes
-    writable: yes
+    writable: no
     browseable: yes
     path: "{{ hleth_root }}"
 
@@ -52,10 +65,10 @@ samba_shares:
     valid users: hleth, root
     force user: root
     force group: root
-    write_list: hleth, root
+    writeable: yes
     guest_ok: no
     public: no
     writeable: yes
-    browseable: yes
+    browseable: no
     path: "{{ homeassistant_data_directory }}"
 

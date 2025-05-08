@@ -10,8 +10,8 @@
     
     - name: Z-Wave JS UI Docker Container
       docker_container:
-        name: "{{ zwave_js_container_name }}"
-        image: "{{ zwave_js_docker_image }}"
+        name: zwave_js_ui
+        image: zwavejs/zwave-js-ui:latest
         pull: true
         volumes:
           - "{{ zwave_js_directory }}/usr/src/app/store:/store:rw"
@@ -31,6 +31,6 @@
   block:
     - name: Stop Z-Wave JS UI
       docker_container:
-        name: "{{ zwave_js_container_name }}"
+        name: zwave_js_ui
         state: absent
   when: zwave_js_enabled is false

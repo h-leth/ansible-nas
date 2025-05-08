@@ -1,0 +1,15 @@
+---
+loki_enabled: false
+
+# directories 
+loki_directory: "{{ docker_home }}/loki"
+loki_data_directory: "{{ loki_directory }}/data"
+
+# default config url
+loki_default_config_url: "https://raw.githubusercontent.com/grafana/loki/master/cmd/loki/loki-local-config.yaml"
+
+# network
+loki_port: "3100"
+
+# specs
+loki_memory: 512M 

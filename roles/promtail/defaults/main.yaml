@@ -1,0 +1,13 @@
+---
+promtail_enabled: false
+
+# directories 
+promtail_directory: "{{ docker_home }}/promtail"
+promtail_data_directory: "{{ promtail_directory }}/data"
+promtail_log_directory: "{{ promtail_directory }}/log"
+
+# promtail default config url
+promtail_default_config_url: "https://raw.githubusercontent.com/grafana/loki/master/clients/cmd/promtail/promtail-docker-config.yaml"
+
+# specs
+promtail_memory: 512M 

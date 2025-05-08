@@ -1,0 +1,52 @@
+---
+- name: Start Prometheus
+  block:
+    - name: Create Prometheus Directories
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ prometheus_directory }}"
+    
+    - name: Prometheus Docker Container
+      docker_container:
+        name: prometheus
+        image: prom/prometheus:latest
+        pull: true
+        volumes:
+          - "{{ prometheus_directory }}/data:/etc/prometheus:rw"
+        ports: 
+          - "{{ prometheus_port }}:9090"
+        restart_policy: unless-stopped
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+        memory: "{{ prometheus_memory }}"
+
+    - name: Snmp Exporter Docker Container
+      docker_container:
+        name: snmp_exporter
+        image: prom/snmp-exporter:latest
+        pull: true
+        volumes:
+          -  "{{ snmp_exporter_directory }}/data:/etc/snmp_exporter:rw"
+        ports:
+          -  "{{ snmp_port }}:9116"
+          -  "{{ snmp_port2 }}:116/udp"
+        restart_policy: unless-stopped
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+        memory: "{{ snmp_exporter_memory }}"
+  when: prometheus_enabled is true
+
+- name: Stop Prometheus
+  block:
+    - name: Stop Prometheus
+      docker_container:
+        name: prometheus
+        state: absent
+
+    - name: Stop Snmp Exporter
+      docker_container:
+        name: snmp_exporter
+        state: absent
+  when: prometheus_enabled is false

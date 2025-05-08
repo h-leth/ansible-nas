@@ -12,7 +12,7 @@
 # ansible-nas ansible_host=192.168.2.100
 
 ## Example when running directly on your Ansible-NAS server
-ansible-nas ansible_connection=local ansible_host=localhost
+server01 ansible_connection=local ansible_host=localhost
 
 [nas]
-ansible-nas
+server01
