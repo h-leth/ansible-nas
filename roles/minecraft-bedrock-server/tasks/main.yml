@@ -1,13 +1,17 @@
 ---
-- name: Create Minecraft Bedrock Server Directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-  with_items:
-    - "{{ minecraft_bedrock_server_data_directory }}"
-
 - name: Start Minecraft Bedrock Server
   block:
+    - name: Create Minecraft Bedrock Server Directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ minecraft_bedrock_server_data_directory }}"
+
+    - name: Create bridged mc_bedrock network
+      docker_network:
+        name: mc_bedrock
+
     - name: Minecraft Bedrock Server Docker Container
       community.docker.docker_container:
         name: "{{ minecraft_bedrock_server_container_name }}"
@@ -15,8 +19,11 @@
         pull: true
         volumes:
           - "{{ minecraft_bedrock_server_data_directory }}:/data:rw"
+        network_mode: mc_bedrock
         ports:
           - "{{ minecraft_bedrock_server_port }}:19132/udp"
+        interactive: true
+        tty: true
         env:
           EULA: "TRUE"
           SERVER_NAME: "{{ minecraft_bedrock_server_name }}"

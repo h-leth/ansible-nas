@@ -19,7 +19,7 @@
         pull: true
         volumes:
           - "{{ minecraft_server_data_directory }}:/data:rw"
-        network_mode: mc_bedrock
+        network_mode: mc_java
         ports:
           - "{{ minecraft_server_port }}:25565"
         interactive: true

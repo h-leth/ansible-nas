@@ -157,7 +157,7 @@
     - role: grafana
       tags:
         - grafana
-      when: (grafana_enabled | default(False))
+          #      when: (grafana_enabled | default(False))
 
     - role: gotify
       tags:
