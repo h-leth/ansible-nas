@@ -1,0 +1,38 @@
+From 1cfdae994b1293ca703d8d9b4f7fa4397890612f Mon Sep 17 00:00:00 2001
+From: Denis Gukov <denguk@gmail.com>
+Date: Wed, 4 Dec 2024 17:27:18 +0500
+Subject: [PATCH] fix: use python3-docker instead of pip3 installation
+
+---
+ roles/ansible-nas-docker/tasks/main.yml | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
+
+diff --git a/roles/ansible-nas-docker/tasks/main.yml b/roles/ansible-nas-docker/tasks/main.yml
+index 595a42666b..8aee80b243 100644
+--- a/roles/ansible-nas-docker/tasks/main.yml
++++ b/roles/ansible-nas-docker/tasks/main.yml
+@@ -1,21 +1,7 @@
+ ---
+-- name: Install python3-pip
++- name: Install python3-docker
+   ansible.builtin.apt:
+-    name: python3-pip
+-    state: present
+-  register: result
+-  until: result is succeeded
+-
+-- name: Remove docker-py python module
+-  ansible.builtin.pip:
+-    name: docker-py
+-    state: absent
+-  register: result
+-  until: result is succeeded
+-
+-- name: Install docker python module
+-  ansible.builtin.pip:
+-    name: docker
++    name: python3-docker
+     state: present
+   register: result
+   until: result is succeeded
+
