@@ -228,10 +228,10 @@
       tags:
         - minecraft-server
 
-    - role: minecraft-java-server
+    - role: minecraft-bedrock-server
       tags:
-        - minecraft-java-server
-      when: (minecraft_java_server_enabled | default(False))
+        - minecraft-bedrock-server
+      when: (minecraft_bedrock_server| default(False))
 
     - role: minidlna
       tags:
