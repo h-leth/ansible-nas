@@ -76,3 +76,10 @@ samba_shares:
     browseable: no
     path: "{{ homeassistant_data_directory }}"
 
+nfs_shares_root: /mnt/tank/nfs_share
+
+nfs_exports:
+  - "{{ nfs_shares_root }}/rpi-tftpboot *(rw,sync,no_root_squash)"
+  - "{{ nfs_shares_root }}/rpi-pxe/node1 *(rw,sync,no_root_squash)"
+  - "{{ nfs_shares_root }}/rpi-pxe/node2 *(rw,sync,no_root_squash)"
+  - "{{ nfs_shares_root }}/rpi-pxe/node3 *(rw,sync,no_root_squash)"
