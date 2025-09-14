@@ -16,3 +16,6 @@ minecraft_bedrock_server_name: "Ansible-NAS Minecraft Server"
 minecraft_bedrock_server_game_mode: "creative"
 minecraft_bedrock_server_difficulty: "normal"
 minecraft_bedrock_server_online_mode: "false"
+minecraft_bedrock_server_ops: "" # csv list of server ops xuids
+minecraft_bedrock_server_members: "" # csv list of server members
+minecraft_bedrock_server_visitors: "" # csv list of server visitors
