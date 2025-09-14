@@ -26,7 +26,7 @@ prometheus_enabled: true
 promtail_enabled: true
 zwave_js_enabled: true
 minecraft_server_enabled: true
-minecraft_bedrock_server: true
+minecraft_bedrock_server_enabled: true
 transmission_enabled: true
 
 ## Home Assistant

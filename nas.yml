@@ -231,7 +231,7 @@
     - role: minecraft-bedrock-server
       tags:
         - minecraft-bedrock-server
-      when: (minecraft_bedrock_server| default(False))
+      when: (minecraft_bedrock_server_enabled | default(False))
 
     - role: minidlna
       tags:
