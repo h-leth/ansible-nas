@@ -39,6 +39,8 @@ utorrent_download_directory: "{{ hleth_root }}/Download"
 zwave_js_serial_device: "/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_a40a61e08e74ec11862ca75019c2d21c-if00-port0"
 
 ## Docker
+docker_home: /mnt/tank/docker
+
 docker_daemon_json:
   data-root: /mnt/tank/docker
   storage-driver: zfs
