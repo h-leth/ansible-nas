@@ -20,7 +20,7 @@ grafana_enabled: true
 homeassistant_enabled: true
 loki_enabled: true
 mariadb_enabled: true
-netbootxyz_enabled: true
+netbootxyz_enabled: false
 portainer_enabled: true
 prometheus_enabled: true
 promtail_enabled: true
